@@ -86,7 +86,7 @@ reset = function(){
   handler = null;
   $('#timer').text(delay);
   $('#timer').css('color', '#fff');
-  $('#timer').css('background', 'hsl(120, 70%, 50%)');
+  $('#timer').css('background', 'hsl(210, 70%, 60%)');
   return resize();
 };
 blink = function(){
@@ -95,7 +95,7 @@ blink = function(){
   return $('#timer').css('color', isLight ? '#fff' : '#f00');
 };
 count = function(){
-  var tm, diff, percentage, lightness, color;
+  var tm, diff, percentage, progress, hue, saturation, lightness, color;
   tm = $('#timer');
   diff = start.getTime() - new Date().getTime() + delay + latency;
   percentage = diff / delay;
@@ -105,8 +105,11 @@ count = function(){
   if (percentage > 1) {
     percentage = 1;
   }
-  lightness = 20 + percentage * 30;
-  color = "hsl(120, 70%, " + lightness + "%)";
+  progress = 1 - percentage;
+  hue = 210 + progress * 30;
+  saturation = 70 - progress * 40;
+  lightness = 60 - progress * 35;
+  color = "hsl(" + hue + ", " + saturation + "%, " + lightness + "%)";
   tm.css('background', color);
   if (diff > 60000) {
     isWarned = false;
