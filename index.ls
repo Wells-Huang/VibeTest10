@@ -65,6 +65,7 @@ reset = ->
   handler := null
   $ \#timer .text delay
   $ \#timer .css \color, \#fff
+  $ \#timer .css \background, 'hsl(120, 70%, 50%)'
   resize!
 
 
@@ -76,6 +77,12 @@ blink = ->
 count = ->
   tm = $ \#timer
   diff = start.getTime! - (new Date!)getTime! + delay + latency
+  percentage = diff / delay
+  if percentage < 0 => percentage = 0
+  if percentage > 1 => percentage = 1
+  lightness = 20 + (percentage * 30)
+  color = "hsl(120, 70%, #{lightness}%)"
+  tm.css \background, color
   if diff > 60000 => is-warned := false
   if diff < 60000 and !is-warned =>
     is-warned := true
